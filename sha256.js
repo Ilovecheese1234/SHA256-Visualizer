@@ -58,6 +58,8 @@ let operatorResultSiga = document.querySelectorAll(".operatorResultSiga")
 let operatorResultMajabc = document.querySelectorAll(".operatorResultMajabc")
 let operatorNameT1 = document.querySelectorAll(".operatorNameT1")
 let operatorResultT1 = document.querySelectorAll(".operatorResultT1")
+let operatorResultT2 = document.querySelectorAll(".operatorResultT2")
+let operatorResultNewVar = document.querySelectorAll(".operatorResultNewVar")
 //hash functions
 
 //Shift right bitwise for [index] bits
@@ -296,6 +298,7 @@ let aVar = []
 let bVar = []
 let cVar = []
 let hVar = []
+let dVar = []
 function simulation(step){
     //Set W1-W16: As it is just the same as M1-M16, W1-W16 are just copies of M1-M16
     if(step==1){
@@ -371,7 +374,8 @@ function simulation(step){
             e.style.color = colorArr[i]
         })
     }
-    if(step>=50 && step<=114){
+    if(step>=50 && step<=113){
+        messageScheduleTitle.textContent = "第四步：雜凑迭代"
         process2.style.opacity = "1";
          groupContent.forEach((e)=>{
             e.style.color="#00DDDD"
@@ -384,11 +388,13 @@ function simulation(step){
         colorArr = ["red","orange","yellow","green","lightgreen","blue","fuchsia"]
         KConstant.style.opacity = "1";
         process.style.opacity = "0";
-        varValue.forEach((e,i)=>{
+        
+        if(step==50){
+            varValue.forEach((e,i)=>{
                 e.textContent = Hini[i]
                 e.style.color = colorArr[i]
             })
-        
+        }
         eVar = varValue[4].textContent.split("")
         for(i = 0;i<32;i++){
             eVar[i] = parseInt(eVar[i])
@@ -417,6 +423,11 @@ function simulation(step){
         for(i = 0;i<32;i++){
             hVar[i] = parseInt(hVar[i])
         }
+        dVar = varValue[3].textContent.split("")
+        for(i = 0;i<32;i++){
+            dVar[i] = parseInt(dVar[i])
+        }
+
 
         operatorResultSige[0].textContent = rotate(eVar,6).join("")
         operatorResultSige[1].textContent = rotate(eVar,11).join("")
@@ -480,7 +491,29 @@ function simulation(step){
             num2[i] = parseInt(num2[i])
         }
         operatorResultT1[5].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2).join("")
-        }
+    
+        operatorResultT2[0].textContent =  Sigma0(aVar,32).join("");
+         operatorResultT2[0].style.color = "gold"
+        operatorResultT2[1].textContent = arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar)).join("");
+        operatorResultT2[1].style.color = "ivory"
+        operatorResultT2[2].textContent = mod32BinAddition(Sigma0(aVar,32),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))).join("")
+        
+
+        operatorResultNewVar[0].textContent = gVar.join("")
+        operatorResultNewVar[1].textContent = fVar.join("")
+        operatorResultNewVar[2].textContent = eVar.join("")
+        operatorResultNewVar[3].textContent = mod32BinAddition(dVar,mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2)).join("")
+        operatorResultNewVar[4].textContent = cVar.join("")
+        operatorResultNewVar[5].textContent = bVar.join("")
+        operatorResultNewVar[6].textContent = aVar.join("")
+        operatorResultNewVar[7].textContent = mod32BinAddition(mod32BinAddition(Sigma0(aVar,32),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2)).join("")
+
+        varValue.forEach((e,i)=>{
+            e.textContent = operatorResultNewVar[i].textContent
+        })
+    }
+
+        
 }
 
 play.addEventListener("mousedown",()=>{

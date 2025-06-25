@@ -206,13 +206,12 @@ body #simulation #process{
     height:fit-content;
     padding: 5%;
     opacity: 0;
+    font-size: 1vw;
 
 }
 
 body #simulation #process #container1 #container11{
     font-size: 1vw;
-    margin-bottom: 10%;
-    margin-top:3%;
     position: relative;
 
 }
@@ -314,7 +313,8 @@ body #simulation #process2{
     border:solid orange;
     border-radius: 20px;
     height:fit-content;
-    padding: 5%;
+    padding: 3%;
+    font-size:1vw;
     opacity: 0;
 }
 body #simulation #process2 #container21{
@@ -386,5 +386,27 @@ body #simulation #process2 #container26 .calcContainer{
     width:100%;
     display: inline-grid;
     grid: 100% / 5% 25% 75%;
+}
+
+
+
+body #simulation #process2 #container27 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container27 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+}
+
+body #simulation #process2 #container28 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container28 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 25% 75%;
 }
 
