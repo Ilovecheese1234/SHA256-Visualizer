@@ -230,9 +230,7 @@ body #simulation #process #container1 #container11 .itemContainer11{
 
 body #simulation #process #container1 #container12{
     font-size: 1vw;
-    margin-bottom: 10%;
     color:lightgreen;
-    margin-top:3%;
     position: relative;
 
 }
@@ -246,11 +244,11 @@ body #simulation #process #container1 #container12 .itemContainer12{
     width:100%;
     display: inline-grid;
     grid: 100% / 5% 25% 75%;
-    margin: 3%;
 }
 
 body #simulation #process #container1 #container13{
     font-size:1vw;
+        margin-top: 10%;
     
 }
 body #simulation #process #container1 #container13 .itemContainer13{
@@ -258,7 +256,7 @@ body #simulation #process #container1 #container13 .itemContainer13{
     width:100%;
     display: inline-grid;
     grid: 100% / 5% 20% 75%;
-    margin: 3%;
+
 }
 
 body #simulation #process #disclaimer{
@@ -410,3 +408,14 @@ body #simulation #process2 #container28 .calcContainer{
     grid: 100% / 25% 75%;
 }
 
+
+body #simulation #process2 #container20 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container20 .varContainerH{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    color:gold;
+    grid: 100% / 30% 70%;
+}

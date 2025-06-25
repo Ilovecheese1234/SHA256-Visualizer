@@ -50,6 +50,7 @@ let kgroupName = document.querySelectorAll(".kgroupName")
 let kgroupContent = document.querySelectorAll(".kgroupContent")
 let KConstant = document.getElementById("KConstant")
 let varValue = document.querySelectorAll(".varValue")
+let varValueH = document.querySelectorAll(".varValueH")
 
 let process2 = document.getElementById("process2")
 let operatorResultSige = document.querySelectorAll(".operatorResultSige")
@@ -375,7 +376,7 @@ function simulation(step){
         })
     }
     if(step>=50 && step<=113){
-        messageScheduleTitle.textContent = "第四步：雜凑迭代"
+        messageScheduleTitle.textContent = "第四步：雜凑迭代（信息）"
         process2.style.opacity = "1";
          groupContent.forEach((e)=>{
             e.style.color="#00DDDD"
@@ -391,6 +392,10 @@ function simulation(step){
         
         if(step==50){
             varValue.forEach((e,i)=>{
+                e.textContent = Hini[i]
+                e.style.color = colorArr[i]
+            })
+            varValueH.forEach((e,i)=>{
                 e.textContent = Hini[i]
                 e.style.color = colorArr[i]
             })
