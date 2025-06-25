@@ -1,0 +1,390 @@
+body{
+    position: absolute;
+    height:100%;
+    width:100%;
+    background-color: #333344;
+}
+body #simulation{
+    position:relative;
+    height:100%;
+    top:0;
+    left:0;
+    display: grid;
+    grid: 5% auto auto auto / auto auto auto auto;
+    row-gap:2%;
+    column-gap: 2%;
+    padding:0;
+}
+
+body #simulation #header{
+    grid-area: 1 / 1 / span 1 / span 4;
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    justify-content: space-around;
+    position:relative;
+    width:60%;
+}
+
+body #simulation #header #message{
+    position:relative;
+    width:70%;
+    height:100%;
+    border-radius: 20px;
+    background-color: #444477;
+    border:transparent;
+    color:white;
+    font-size: 1.5vw;
+    padding-left: 2%;
+}
+
+body #simulation #header .button{
+    position:relative;
+    height:80%;
+    color:white;
+    width:4vw;
+    border-radius: 10px;
+    border-width: 0;
+    cursor: pointer;
+}
+
+body #simulation #header #reverse:after{
+    content:"上一步"
+}
+
+body #simulation #header #play:after{
+    content:"模擬"
+}
+
+body #simulation #header #next:after{
+    content:"下一步"
+}
+
+body #simulation #header .button:after{
+    position:relative;
+    display: inline-flex;
+    top:100%;
+    width:8vw;
+    right:100%;
+    justify-content: center;
+    align-items: center;
+    height:5vh;
+    background-color: #222222;
+    color:white;
+    border-radius: 1000px;
+    opacity: 0;
+    font-size:1vw;
+    transition: 0.3s linear;
+}
+
+body #simulation #header .button:hover:after{
+    opacity: 1;
+}
+
+
+
+body #simulation #header .button:nth-child(2n+1){
+    background-color: #AA2200;
+}
+
+body #simulation #header .button:nth-child(2n){
+    background-color: #AAAAAA;
+}
+
+
+body #simulation #convert{
+    grid-area: 2 / 1 / span 1 / span 4;
+    display:inline-grid;
+    row-gap: 0;
+    grid: auto auto auto auto auto/ 15% 85%;
+    color:white;
+    position:relative;
+    height:auto;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    padding:3%;
+}
+
+body #simulation #convert #convertTitle{
+    grid-area: 1 / 1 / span 5 / span 1;
+    display: flex;
+    align-items: center;
+    font-size:1vw;
+    justify-content: center;
+}
+
+body #simulation #convert .convertContent{
+    display: flex;
+    align-self: center;
+    justify-self: center;
+
+    font-size:1vw;
+    word-wrap: break-word;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body #simulation #convert .convertContent:nth-child(2n){
+    color:#0088DD;
+}
+body #simulation #messageBlock{
+    position:relative;
+    grid-area: 3/ 1 / span 1 / span 4;
+    color:white;
+    display: grid;
+    grid: auto auto 50%/auto;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    padding:5%;
+    height:max-content;
+    font-size:1vw;
+}
+body #simulation #messageBlock #messageTitle{
+    margin-bottom: 3%;
+}
+body #simulation #messageBlock #messageContainer{
+    height:fit-content;
+}
+body #simulation #messageBlock #messageContainer #messagePadding{
+    color:yellow
+}
+body #simulation #messageBlock #messageContainer #messageLength{
+    color:lightgreen;
+}
+
+body #simulation #messageBlock #description{
+    position:relative;
+    height:max-content;
+}
+
+body #simulation #messageSchedule{
+    grid-area: 4 / 1 / span 1 / span 1;
+    font-size: 1vw;
+    display:inline-grid;
+    row-gap: 0;
+    grid: 1% auto/ auto ;
+    color:white;
+    position:relative;
+    height:max-content;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    padding:3%;
+}
+
+body #simulation #messageSchedule #messageScheduleContent{
+    margin-top: 5%;
+    grid-area: 2 / 1 / span 1 / span 1;
+    font-size: 1vw;
+}
+
+body #simulation #messageSchedule #messageScheduleContent .messageGroup{
+    display: inline-grid;
+    position: relative;
+    width:100%;
+    grid: auto / 20% 80%;
+}
+
+body #simulation #messageSchedule #messageScheduleContent .messageGroup .groupName{
+    color: gold;
+}
+
+body #simulation #messageSchedule #messageScheduleContent .messageGroup .groupContent{
+    color:#00DDDD;
+}
+
+body #simulation #process{
+     grid-area: 4 / 2 / span 1 / span 2;
+    display:inline-grid;
+    row-gap: 0;
+    grid: auto auto / auto;
+    color:white;
+    position:relative;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    height:fit-content;
+    padding: 5%;
+    opacity: 0;
+
+}
+
+body #simulation #process #container1 #container11{
+    font-size: 1vw;
+    margin-bottom: 10%;
+    margin-top:3%;
+    position: relative;
+
+}
+body #simulation #process #container1 #container11 #itemTitle11{
+    margin-top: 3%;
+    display: flex;
+    justify-self: center;
+}
+body #simulation #process #container1 #container11 .itemContainer11{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+    margin: 3%;
+}
+
+body #simulation #process #container1 #container12{
+    font-size: 1vw;
+    margin-bottom: 10%;
+    color:lightgreen;
+    margin-top:3%;
+    position: relative;
+
+}
+body #simulation #process #container1 #container12 #itemTitle12{
+    margin-top: 3%;
+    display: flex;
+    justify-self: center;
+}
+body #simulation #process #container1 #container12 .itemContainer12{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+    margin: 3%;
+}
+
+body #simulation #process #container1 #container13{
+    font-size:1vw;
+    
+}
+body #simulation #process #container1 #container13 .itemContainer13{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 20% 75%;
+    margin: 3%;
+}
+
+body #simulation #process #disclaimer{
+    font-size: 1vw;
+}
+
+body #simulation #KConstant{
+    grid-area: 4 / 4 / span 1 / span 1;
+    display:inline-grid;
+    row-gap: 0;
+    grid: auto auto/ auto ;
+    color:white;
+    position:relative;
+    height:fit-content;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    padding:3%;  
+    font-size: 1vw;
+    opacity: 0;
+}
+
+body #simulation #kContent{
+    margin-top: 5%;
+    grid-area: 2 / 1 / span 1 / span 1;
+    font-size: 1vw;
+}
+
+body #simulation #kContent .kGroup{
+    display: inline-grid;
+    position: relative;
+    width:100%;
+    grid: auto / 20% 80%;
+}
+
+body #simulation #kContent .kGroup .kgroupName{
+    color: gold;
+}
+
+body #simulation #kContent .kGroup .kgroupContent{
+    color:#00DDDD;
+}
+
+body #simulation #process2{
+    grid-area: 4 / 2 / span 1 / span 2;
+    display:inline-grid;
+    row-gap: 0;
+    grid: auto auto / auto;
+    color:white;
+    position:relative;
+    word-wrap: break-word;
+    border:solid orange;
+    border-radius: 20px;
+    height:fit-content;
+    padding: 5%;
+    opacity: 0;
+}
+body #simulation #process2 #container21{
+    margin-top: 5%;
+}
+body #simulation #process2 #container21 .varContainer{
+    display: inline-grid;
+    grid: 100% / auto auto;
+    position:relative;
+    width:100%;
+}
+
+body #simulation #process2 #container21 .varContainer .varName{
+    color:gold;
+
+    grid-area: 1 / 1 / span 1 / span 1;
+
+}
+
+body #simulation #process2 #container21 .varContainer .varValue{
+    grid-area: 1 / 2 / span 1 / span 1;
+    font-size: 1vw;
+}
+
+body #simulation #process2 #container22{
+    margin-top: 5%;
+     font-size:1vw;
+}
+
+body #simulation #process2 #container22 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+}
+body #simulation #process2 #container23{
+    margin-top:5%;
+    font-size:1vw;
+}
+body #simulation #process2 #container23 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 0% 30% 70%;
+}
+body #simulation #process2 #container24 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container24 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+}
+body #simulation #process2 #container25 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container25 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+}
+body #simulation #process2 #container26 {
+    font-size: 1vw;
+}
+body #simulation #process2 #container26 .calcContainer{
+    position:relative;
+    width:100%;
+    display: inline-grid;
+    grid: 100% / 5% 25% 75%;
+}
+
