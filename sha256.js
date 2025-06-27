@@ -6,6 +6,9 @@ let step = 0
 let messageScheduleTitle = document.getElementById("messageScheduleTitle")
 let processTitle = document.getElementById("processTitle")
 let kTitle = document.getElementById("kTitle")
+let reverse = document.getElementById("reverse")
+
+
 //Step 2 Variables
 let messageTitle = document.getElementById("messageTitle")
 let currentLength = 0
@@ -61,6 +64,8 @@ let operatorNameT1 = document.querySelectorAll(".operatorNameT1")
 let operatorResultT1 = document.querySelectorAll(".operatorResultT1")
 let operatorResultT2 = document.querySelectorAll(".operatorResultT2")
 let operatorResultNewVar = document.querySelectorAll(".operatorResultNewVar")
+//Result
+let resultContent = document.getElementById("resultContent")
 //hash functions
 
 //Shift right bitwise for [index] bits
@@ -228,7 +233,6 @@ message.addEventListener("keyup",()=>{
     while((messageItemArr.length+messagePaddingArr.length) % 512 != 448){
         messagePaddingArr.push('0')
     }
-    console.log(messagePaddingArr.length)
 
     //Append the length of the message
     for(i = 0;i<64;i++){
@@ -291,7 +295,6 @@ let interval = setInterval(()=>{},1000)
 clearInterval(interval)
 let group = []
 let indexArr=[0,0,0,0]
-let Hini = ['01101010000010011110011001100111', '10111011011001111010111010000101', '00111100011011101111001101110010', '10100101010011111111010100111010', '01010001000011100101001001111111', '10011011000001010110100010001100', '00011111100000111101100110101011', '01011011111000001100110100011001']
 let eVar = []
 let fVar = []
 let gVar = []
@@ -300,13 +303,17 @@ let bVar = []
 let cVar = []
 let hVar = []
 let dVar = []
+let Hini = ['01101010000010011110011001100111', '10111011011001111010111010000101', '00111100011011101111001101110010', '10100101010011111111010100111010', '01010001000011100101001001111111', '10011011000001010110100010001100', '00011111100000111101100110101011', '01011011111000001100110100011001']
+
 function simulation(step){
     //Set W1-W16: As it is just the same as M1-M16, W1-W16 are just copies of M1-M16
-    if(step==1){
+    if(step%116==1){
+
         for(i=0;i<16;i++){
             group = []
-            for(j=i*32;j<(i+1)*32;j++){
+            for(j=(i+parseInt(step/114)*16)*32;j<(i+1+parseInt(step/114)*16)*32;j++){
                 group.push(wholeMessageArr[j])
+
             }
             groupContent[i].textContent = group.join("")
         }
@@ -314,7 +321,7 @@ function simulation(step){
     }
 
     //Set W17-W64.
-    if(step>=2 && step<=49){
+    if(step%116 >=2&& step%116<=49){
         let messageArr = []
 
         //Refresh the color of the lists of message groups
@@ -323,10 +330,10 @@ function simulation(step){
         })
 
         //Receiving the content of M_{j-2},M_{j-7},M_{j-15},M_{j-16} and return it into a list
-        message1 = groupContent[step+12].textContent.split("")
-        message2 = groupContent[step+7].textContent.split("")
-        message3 = groupContent[step-1].textContent.split("")
-        message4 = groupContent[step-2].textContent.split("")
+        message1 = groupContent[(step+12)%116].textContent.split("")
+        message2 = groupContent[(step+7)%116].textContent.split("")
+        message3 = groupContent[(step-1)%116].textContent.split("")
+        message4 = groupContent[(step-2)%116].textContent.split("")
 
         //Convert strings to integers
         for(i = 0;i<32;i++){
@@ -337,29 +344,29 @@ function simulation(step){
         }
 
         //Set colors of the groups being calculated
-        groupContent[step+12].style.color = "white";
-        groupContent[step+7].style.color = "green";
-        groupContent[step-2].style.color = "lightgreen";
-        groupContent[step-1].style.color = "yellow";
-        groupContent[step+14].style.color = "fuchsia";
+        groupContent[(step+12)%116].style.color = "white";
+        groupContent[(step+7)%116].style.color = "green";
+        groupContent[(step-2)%116].style.color = "lightgreen";
+        groupContent[(step-1)%116].style.color = "yellow";
+        groupContent[(step+14)%116].style.color = "fuchsia";
 
         //Calculating and return the result of the new message group at W_{j}
-        groupContent[step+14].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(sigma1(message1,32),message2),sigma0(message3,32)),message4).join("")
+        groupContent[(step+14)%116].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(sigma1(message1,32),message2),sigma0(message3,32)),message4).join("")
         
         //Arrays that stores the attributes of the message groups being calculated
-        messageArr = [message1.join(""),message2.join(""),message3.join(""),message4.join(""),groupContent[step+14].textContent]
+        messageArr = [message1.join(""),message2.join(""),message3.join(""),message4.join(""),groupContent[(step+14)%116].textContent]
         colorArr = ["white","green","lightgreen","yellow","fuchsia"]
-        indexArr = [`σ1(W${step+13})`,`W${step+8}`,`σ0(W${step-1})`,`W${step}`,`W${step+15}`]
+        indexArr = [`σ1(W${(step+13)%116})`,`W${(step+8)%116}`,`σ0(W${(step-1)%116})`,`W${(step)%116}`,`W${(step+15)%116}`]
 
         //Changes the text Contents in the "process" part
-        itemTitle11.textContent = `W${step+13}:     ${messageArr[0]}`
+        itemTitle11.textContent = `W${(step+13)%116}:     ${messageArr[0]}`
         messageItemOp11[0].textContent = rotate(message1,7).join("")
         messageItemOp11[1].textContent = rotate(message1,18).join("")
         messageItemOp11[2].textContent = shift(message1,3).join("")
         messageItemOp11[3].textContent = sigma1(message1,32).join("")
         messageOp11[3].textContent = indexArr[0]
 
-        itemTitle12.textContent = `W${step-1}:     ${messageArr[0]}`
+        itemTitle12.textContent = `W${(step-1)%116}:     ${messageArr[0]}`
         messageItemOp12[0].textContent = rotate(message1,17).join("")
         messageItemOp12[1].textContent = rotate(message1,19).join("")
         messageItemOp12[2].textContent = shift(message1,10).join("")
@@ -375,7 +382,7 @@ function simulation(step){
             e.style.color = colorArr[i]
         })
     }
-    if(step>=50 && step<=113){
+    if(step%116>=50 && step%116<=113){
         messageScheduleTitle.textContent = "第四步：雜凑迭代（信息）"
         process2.style.opacity = "1";
          groupContent.forEach((e)=>{
@@ -384,22 +391,28 @@ function simulation(step){
         kgroupContent.forEach((e)=>{
             e.style.color="#00DDDD"
         })
-        groupContent[step-50].style.color = "orange";
-        kgroupContent[step-50].style.color = "magenta";
+        groupContent[(step-50)%116].style.color = "orange";
+        kgroupContent[(step-50)%116].style.color = "magenta";
         colorArr = ["red","orange","yellow","green","lightgreen","blue","fuchsia"]
         KConstant.style.opacity = "1";
         process.style.opacity = "0";
         
-        if(step==50){
-            varValue.forEach((e,i)=>{
-                e.textContent = Hini[i]
-                e.style.color = colorArr[i]
-            })
+        if(step%116==50){
             varValueH.forEach((e,i)=>{
                 e.textContent = Hini[i]
                 e.style.color = colorArr[i]
             })
+            varValue.forEach((e,i)=>{
+                e.textContent = Hini[i]
+                e.style.color = colorArr[i]
+            })
         }
+        else{
+            varValue.forEach((e,i)=>{
+                e.textContent = operatorResultNewVar[7-i].textContent
+            })
+        }
+
         eVar = varValue[4].textContent.split("")
         for(i = 0;i<32;i++){
             eVar[i] = parseInt(eVar[i])
@@ -470,32 +483,32 @@ function simulation(step){
         operatorResultMajabc.forEach((e)=>{
             e.style.color = "ivory"
         })
-        operatorNameT1[3].textContent = `W${step-49}`
-        operatorNameT1[4].textContent = `K${step-49}`
+        operatorNameT1[3].textContent = `W${(step-49)%116}`
+        operatorNameT1[4].textContent = `K${(step-49)%116}`
 
         operatorResultT1[0].textContent = hVar.join("");
 
         operatorResultT1[1].textContent = Sigma1(eVar,32).join("")
         operatorResultT1[1].style.color = "chocolate"
 
-        operatorResultT1[2].textContent = arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar)).join("")
+        operatorResultT1[2].textContent =  arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar)).join("")
         operatorResultT1[2].style.color = "deepskyblue"
 
-        operatorResultT1[3].textContent = groupContent[step-50].textContent;
+        operatorResultT1[3].textContent = groupContent[(step-50)%116].textContent;
         operatorResultT1[3].style.color = "gold"
 
-        num1 = groupContent[step-50].textContent.split("")
+        num1 = groupContent[(step-50)%116].textContent.split("")
         for(i=0;i<32;i++){
             num1[i] = parseInt(num1[i])
         }
 
-        operatorResultT1[4].textContent = kgroupContent[step-50].textContent;
+        operatorResultT1[4].textContent = kgroupContent[(step-50)%116].textContent;
         operatorResultT1[4].style.color = "magenta"
-        num2 = kgroupContent[step-50].textContent.split("")
+        num2 = kgroupContent[(step-50)%116].textContent.split("")
         for(i=0;i<32;i++){
-            num2[i] = parseInt(num2[i])
+            num2[i] = parseInt(num2[i]) 
         }
-        operatorResultT1[5].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2).join("")
+        operatorResultT1[5].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar))),num1),num2).join("")
     
         operatorResultT2[0].textContent =  Sigma0(aVar,32).join("");
          operatorResultT2[0].style.color = "gold"
@@ -507,17 +520,53 @@ function simulation(step){
         operatorResultNewVar[0].textContent = gVar.join("")
         operatorResultNewVar[1].textContent = fVar.join("")
         operatorResultNewVar[2].textContent = eVar.join("")
-        operatorResultNewVar[3].textContent = mod32BinAddition(dVar,mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2)).join("")
+        operatorResultNewVar[3].textContent = mod32BinAddition(dVar,mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar))),num1),num2)).join("")
         operatorResultNewVar[4].textContent = cVar.join("")
         operatorResultNewVar[5].textContent = bVar.join("")
         operatorResultNewVar[6].textContent = aVar.join("")
-        operatorResultNewVar[7].textContent = mod32BinAddition(mod32BinAddition(Sigma0(aVar,32),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),num1),num2)).join("")
-
-        varValue.forEach((e,i)=>{
-            e.textContent = operatorResultNewVar[i].textContent
-        })
+        operatorResultNewVar[7].textContent = mod32BinAddition(mod32BinAddition(Sigma0(aVar,32),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))),mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar))),num1),num2)).join("")
+        
+        
     }
 
+    if((step)%116==114){
+        if(step-50>0){
+            let temp = Hini
+            let temp2 = []
+            for(m = 0;m<=7;m++){
+                temp2.push(operatorResultNewVar[m].textContent)
+            }
+            let temp11 = []
+            let temp21 = []
+            console.log(temp2)
+            Hini = []
+            for(k = 0;k<=7;k++){
+                temp11 = []
+                temp21 = []
+                for(l = 0;l<32;l++){
+                    temp11.push(parseInt(temp[k][l]))
+                    temp21.push(parseInt(temp2[7-k][l]))
+                    
+                }
+                Hini.push(mod32BinAddition(temp11,temp21).join(""))
+            }
+
+
+        }
+        
+        
+
+    }
+
+    if((step)%116==0){
+        groupContent.forEach((e,i)=>{
+            e.textContent = ""
+        })
+        process.style.opacity = 0
+        process2.style.opacity = 0
+        KConstant.style.opacity = 0
+        messageScheduleTitle.textContent = "第三步：消息調度"
+    }
         
 }
 
@@ -526,13 +575,29 @@ play.addEventListener("mousedown",()=>{
     
     if(clickCount%2==1){
         interval = setInterval(()=>{
+            if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2){
+                resultArr = []
+    
+                
+               console.log(step)
+                for(i=0;i<8;i++){
+                    resultArr.push(parseInt(Hini[i],2).toString(16))
+                }
+                resultContent.textContent = resultArr.join("")
+                clearInterval(interval)
+            }
             step++
             simulation(step);
         },100)
     }
+
     else{
         clearInterval(interval)
     }
     
 })
 
+reverse.addEventListener("mousedown",()=>{
+    step--
+    simulation(step);
+})

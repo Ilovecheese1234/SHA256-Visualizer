@@ -10,7 +10,7 @@ body #simulation{
     top:0;
     left:0;
     display: grid;
-    grid: 5% auto auto auto / auto auto auto auto;
+    grid: 5% auto auto auto auto/ auto auto auto auto;
     row-gap:2%;
     column-gap: 2%;
     padding:0;
@@ -24,6 +24,7 @@ body #simulation #header{
     justify-content: space-around;
     position:relative;
     width:60%;
+    font-size:1vw;
 }
 
 body #simulation #header #message{
@@ -40,46 +41,19 @@ body #simulation #header #message{
 
 body #simulation #header .button{
     position:relative;
-    height:80%;
+    height:4vw;
     color:white;
     width:4vw;
     border-radius: 10px;
     border-width: 0;
     cursor: pointer;
-}
-
-body #simulation #header #reverse:after{
-    content:"上一步"
-}
-
-body #simulation #header #play:after{
-    content:"模擬"
-}
-
-body #simulation #header #next:after{
-    content:"下一步"
-}
-
-body #simulation #header .button:after{
-    position:relative;
-    display: inline-flex;
-    top:100%;
-    width:8vw;
-    right:100%;
-    justify-content: center;
+    font-size: 2vh;
+    display: flex;
     align-items: center;
-    height:5vh;
-    background-color: #222222;
-    color:white;
-    border-radius: 1000px;
-    opacity: 0;
-    font-size:1vw;
-    transition: 0.3s linear;
+    justify-content: center;
 }
 
-body #simulation #header .button:hover:after{
-    opacity: 1;
-}
+
 
 
 
@@ -101,6 +75,7 @@ body #simulation #convert{
     position:relative;
     height:auto;
     word-wrap: break-word;
+    border-width: 0.2vw;
     border:solid orange;
     border-radius: 20px;
     padding:3%;
@@ -134,6 +109,7 @@ body #simulation #messageBlock{
     grid: auto auto 50%/auto;
     word-wrap: break-word;
     border:solid orange;
+    border-width: 0.2vw;
     border-radius: 20px;
     padding:5%;
     height:max-content;
@@ -165,7 +141,7 @@ body #simulation #messageSchedule{
     grid: 1% auto/ auto ;
     color:white;
     position:relative;
-    height:max-content;
+    border-width: 0.2vw;
     word-wrap: break-word;
     border:solid orange;
     border-radius: 20px;
@@ -203,9 +179,9 @@ body #simulation #process{
     word-wrap: break-word;
     border:solid orange;
     border-radius: 20px;
-    height:fit-content;
     padding: 5%;
     opacity: 0;
+    border-width: 0.2vw;
     font-size: 1vw;
 
 }
@@ -267,20 +243,19 @@ body #simulation #KConstant{
     grid-area: 4 / 4 / span 1 / span 1;
     display:inline-grid;
     row-gap: 0;
-    grid: auto auto/ auto ;
+    grid: 2% auto/ auto ;
     color:white;
     position:relative;
-    height:fit-content;
     word-wrap: break-word;
     border:solid orange;
     border-radius: 20px;
     padding:3%;  
     font-size: 1vw;
     opacity: 0;
+    border-width: 0.2vw;
 }
 
 body #simulation #kContent{
-    margin-top: 5%;
     grid-area: 2 / 1 / span 1 / span 1;
     font-size: 1vw;
 }
@@ -314,6 +289,7 @@ body #simulation #process2{
     padding: 3%;
     font-size:1vw;
     opacity: 0;
+    border-width: 0.2vw;
 }
 body #simulation #process2 #container21{
     margin-top: 5%;
@@ -418,4 +394,18 @@ body #simulation #process2 #container20 .varContainerH{
     display: inline-grid;
     color:gold;
     grid: 100% / 30% 70%;
+}
+body #simulation #result{
+    grid-area: 5 / 1 / span 1 / span 4;
+    padding:3%;
+    display: grid;
+    grid: auto auto/auto;
+    gap: 3%;;
+    position:relative;
+    height:max-content;
+    border: solid orange;
+    border-width: 0.2vw;
+    border-radius: 20px;
+    font-size:2vw;
+    color:white;
 }
