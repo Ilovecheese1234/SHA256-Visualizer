@@ -73,10 +73,11 @@ body #simulation #header .button{
     height:3vw;
     color:white;
     width:3vw;
+
     border-radius: 100px;
     border-width: 0;
     cursor: pointer;
-    font-size: 2vh;
+    font-size: 1.5vw;
     display: flex;
     align-items: center;
     justify-content: center;
