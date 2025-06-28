@@ -6,15 +6,18 @@
     <title>Document</title>
     <link rel="stylesheet" href="sha256.css">
 </head>
-<body>
-    
+<body id="body">
+    <div id="hintContainer"></div>
 
     <div id="simulation">
         <div id="header">
-            <input id="message">
-            <button id="reverse" class="button"><</button>
-            <button id="play" class="button">||</button>
-            <button id="next" class="button">></button>
+            <input id="message" placeholder="信息輸入">
+            <button id="reset" class="button">↺</button>
+            <button id="reverse" class="button">⏴︎</button>
+            <button id="play" class="button">⏯︎</button>
+            <button id="next" class="button">⏵︎</button>
+            <button id="forward" class="button">⏭︎</button>
+            <input id="speed" placeholder="計算速度（微秒）">
         </div>
         
         <div id="convert">
@@ -43,7 +46,7 @@
         </div>
 
         <div id="messageSchedule">
-            <div id="messageScheduleTitle">第三步：消息調度</div>
+            <div id="messageScheduleTitle">第三步：消息調度（第1組數據塊）</div>
 
             <div id="messageScheduleContent">
 
@@ -1092,10 +1095,204 @@
             </div>
         </div>
         <div id="result">
-            <div id="resultTitle">結果</div>
-            <div id="resultContent">
-                
+            <div id="resultTitle">第五步：雜凑計算</div>
+
+            <div id="calcHashContainer">
+
+                <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">a</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H1</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H1</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">b</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H2</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H2</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">c</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H3</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H3</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">d</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H4</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H4</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">e</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H5</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H5</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">f</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H6</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H6</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">g</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H7</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H7</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+                 <div class="containerHash">
+                    <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">h</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+        
+                    <div class="calcContainerHash">
+                        <div class="operatorHash">+</div>
+                        <div class="operatorNameHash">舊H8</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                    <hr>
+                     <div class="calcContainerHash">
+                        <div class="operatorHash"></div>
+                        <div class="operatorNameHash">新H8</div>
+                        <div class="operatorResultHash"></div>
+                        <div class="operatorResultHashHex"></div>
+                    </div>
+                </div>
+
+
             </div>
+
+            <div id="resultContent">
+                <div id="resultContentTitle">把新H1到新H8結合，我們得出雜凑結果是:</div>
+                <div id="resultContentResult"></div>
+            </div>
+        </div>
+        <div id="disclaimer" style="color:white">
+           Program solely developed by <a href="https://github.com/Ilovecheese1234/SHA256demo" style="color:white">Ilovecheese1234</a>. UI inspired by <a href="https://github.com/dmarman/sha256algorithm" style="color:white">manceraio</a> 8536414dafb3195704f796b7074008f468b64b4d69461356924ddf57f36f42a
         </div>
     </div>
     

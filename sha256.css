@@ -1,8 +1,25 @@
 body{
     position: absolute;
     height:100%;
-    width:100%;
-    background-color: #333344;
+    width:fit-content;
+    background-color: #00171F;
+    scroll-behavior: smooth;
+    font-family: 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
+    overflow-x: hidden;
+    
+}
+body #hintContainer{
+    position:absolute;
+    width:fit-content;
+    height:fit-content;
+    padding:1%;
+    border-radius: 20px;
+    opacity: 0;
+    background-color: #001f54;
+    color:white;
+    border: solid #f8f7ff 2px;
+    z-index: 10000;
+    font-size: 1vw;
 }
 body #simulation{
     position:relative;
@@ -10,12 +27,15 @@ body #simulation{
     top:0;
     left:0;
     display: grid;
-    grid: 5% auto auto auto auto/ auto auto auto auto;
+    grid: 5% auto auto auto auto auto/ auto auto auto auto;
     row-gap:2%;
     column-gap: 2%;
     padding:0;
 }
-
+hr{
+    padding:0;
+    margin: 0;
+}
 body #simulation #header{
     grid-area: 1 / 1 / span 1 / span 4;
     display: flex;
@@ -23,28 +43,37 @@ body #simulation #header{
     align-items: center;
     justify-content: space-around;
     position:relative;
-    width:60%;
+    width:80%;
     font-size:1vw;
 }
 
 body #simulation #header #message{
     position:relative;
-    width:70%;
+    width:40%;
     height:100%;
     border-radius: 20px;
-    background-color: #444477;
+    background-color: #00A7E1;
     border:transparent;
-    color:white;
+    color:#014f86;
     font-size: 1.5vw;
     padding-left: 2%;
 }
-
+body #simulation #header #speed{
+    border-radius: 20px;
+    height:100%;
+    background-color: cyan;
+    border:transparent;
+    color:#014f86;
+    font-size: 1.5vw;
+    padding-left: 2%;
+    width:30%;
+}
 body #simulation #header .button{
     position:relative;
-    height:4vw;
+    height:3vw;
     color:white;
-    width:4vw;
-    border-radius: 10px;
+    width:3vw;
+    border-radius: 100px;
     border-width: 0;
     cursor: pointer;
     font-size: 2vh;
@@ -55,15 +84,15 @@ body #simulation #header .button{
 
 
 
+body #simulation #header .button{
+    background-color: #AAAAAA;
+}
 
 
-body #simulation #header .button:nth-child(2n+1){
+body #simulation #header .button:nth-child(4){
     background-color: #AA2200;
 }
 
-body #simulation #header .button:nth-child(2n){
-    background-color: #AAAAAA;
-}
 
 
 body #simulation #convert{
@@ -76,7 +105,6 @@ body #simulation #convert{
     height:auto;
     word-wrap: break-word;
     border-width: 0.2vw;
-    border:solid orange;
     border-radius: 20px;
     padding:3%;
 }
@@ -108,7 +136,6 @@ body #simulation #messageBlock{
     display: grid;
     grid: auto auto 50%/auto;
     word-wrap: break-word;
-    border:solid orange;
     border-width: 0.2vw;
     border-radius: 20px;
     padding:5%;
@@ -135,15 +162,15 @@ body #simulation #messageBlock #description{
 
 body #simulation #messageSchedule{
     grid-area: 4 / 1 / span 1 / span 1;
-    font-size: 1vw;
+    font-size: 0.8vw;
     display:inline-grid;
     row-gap: 0;
+    width:fit-content;
     grid: 1% auto/ auto ;
     color:white;
     position:relative;
     border-width: 0.2vw;
     word-wrap: break-word;
-    border:solid orange;
     border-radius: 20px;
     padding:3%;
 }
@@ -166,18 +193,17 @@ body #simulation #messageSchedule #messageScheduleContent .messageGroup .groupNa
 }
 
 body #simulation #messageSchedule #messageScheduleContent .messageGroup .groupContent{
-    color:#00DDDD;
+    color:#0077b6;
 }
 
 body #simulation #process{
      grid-area: 4 / 2 / span 1 / span 2;
     display:inline-grid;
     row-gap: 0;
-    grid: auto auto / auto;
+    grid: 3% auto auto/ auto;
     color:white;
     position:relative;
     word-wrap: break-word;
-    border:solid orange;
     border-radius: 20px;
     padding: 5%;
     opacity: 0;
@@ -185,10 +211,17 @@ body #simulation #process{
     font-size: 1vw;
 
 }
+body #simulation #process #processTitle{
+    grid-area: 1 /1 / span 1 / span 1;
+}
+body #simulation #process #container1 {
+    grid-area: 2 /1 / span 1 / span 1;
 
+}   
 body #simulation #process #container1 #container11{
     font-size: 1vw;
     position: relative;
+    
 
 }
 body #simulation #process #container1 #container11 #itemTitle11{
@@ -237,6 +270,7 @@ body #simulation #process #container1 #container13 .itemContainer13{
 
 body #simulation #process #disclaimer{
     font-size: 1vw;
+    grid-area: 3 / 1 / span 1 / span 1;
 }
 
 body #simulation #KConstant{
@@ -247,7 +281,6 @@ body #simulation #KConstant{
     color:white;
     position:relative;
     word-wrap: break-word;
-    border:solid orange;
     border-radius: 20px;
     padding:3%;  
     font-size: 1vw;
@@ -283,16 +316,12 @@ body #simulation #process2{
     color:white;
     position:relative;
     word-wrap: break-word;
-    border:solid orange;
     border-radius: 20px;
     height:fit-content;
     padding: 3%;
     font-size:1vw;
     opacity: 0;
     border-width: 0.2vw;
-}
-body #simulation #process2 #container21{
-    margin-top: 5%;
 }
 body #simulation #process2 #container21 .varContainer{
     display: inline-grid;
@@ -310,12 +339,12 @@ body #simulation #process2 #container21 .varContainer .varName{
 
 body #simulation #process2 #container21 .varContainer .varValue{
     grid-area: 1 / 2 / span 1 / span 1;
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 
 body #simulation #process2 #container22{
-    margin-top: 5%;
-     font-size:1vw;
+
+     font-size:0.9vw;
 }
 
 body #simulation #process2 #container22 .calcContainer{
@@ -325,8 +354,7 @@ body #simulation #process2 #container22 .calcContainer{
     grid: 100% / 5% 25% 75%;
 }
 body #simulation #process2 #container23{
-    margin-top:5%;
-    font-size:1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container23 .calcContainer{
     position:relative;
@@ -335,7 +363,7 @@ body #simulation #process2 #container23 .calcContainer{
     grid: 100% / 0% 30% 70%;
 }
 body #simulation #process2 #container24 {
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container24 .calcContainer{
     position:relative;
@@ -344,7 +372,7 @@ body #simulation #process2 #container24 .calcContainer{
     grid: 100% / 5% 25% 75%;
 }
 body #simulation #process2 #container25 {
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container25 .calcContainer{
     position:relative;
@@ -353,7 +381,7 @@ body #simulation #process2 #container25 .calcContainer{
     grid: 100% / 5% 25% 75%;
 }
 body #simulation #process2 #container26 {
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container26 .calcContainer{
     position:relative;
@@ -365,7 +393,7 @@ body #simulation #process2 #container26 .calcContainer{
 
 
 body #simulation #process2 #container27 {
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container27 .calcContainer{
     position:relative;
@@ -373,20 +401,27 @@ body #simulation #process2 #container27 .calcContainer{
     display: inline-grid;
     grid: 100% / 5% 25% 75%;
 }
-
+body #simulation #process2 #container27 .calcContainer .operatorResultT2:nth-child(3){
+    color: #44bba4;
+}
 body #simulation #process2 #container28 {
-    font-size: 1vw;
+    font-size:0.9vw;
+    
 }
 body #simulation #process2 #container28 .calcContainer{
     position:relative;
     width:100%;
     display: inline-grid;
     grid: 100% / 25% 75%;
+    
 }
 
+body #simulation #process2 #container28 .calcContainer .operatorResultNewVar{
+    color:#00a7e1;
+}
 
 body #simulation #process2 #container20 {
-    font-size: 1vw;
+    font-size:0.9vw;
 }
 body #simulation #process2 #container20 .varContainerH{
     position:relative;
@@ -397,15 +432,47 @@ body #simulation #process2 #container20 .varContainerH{
 }
 body #simulation #result{
     grid-area: 5 / 1 / span 1 / span 4;
-    padding:3%;
     display: grid;
-    grid: auto auto/auto;
-    gap: 3%;;
+    grid: auto auto/30% auto;
     position:relative;
     height:max-content;
-    border: solid orange;
-    border-width: 0.2vw;
-    border-radius: 20px;
     font-size:2vw;
     color:white;
+    padding-bottom: 2%;
+    
+}
+body #simulation #result #resultTitle{
+    grid-area: 1/ 1/ span 1 / span 2;
+    font-size: 1vw;
+    
+}
+body #simulation #result #calcHashContainer .containerHash{
+    margin-top: 2%;
+}
+body #simulation #result #calcHashContainer .containerHash .calcContainerHash{
+    font-size:0.8vw;
+    position:relative;
+    color:#00a7e1;
+    width: 100%;
+    display: grid;
+   grid: 100% / 5% 10% 60% 15%;
+  
+}
+body #simulation #result #resultContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    
+}
+
+body #simulation #result #resultContentResult{
+    color: cyan;
+    font-size: 1.5vw;
+}
+
+body #simulation #disclaimer{
+    grid-area:6 / 1 / span 1 / span 4;
+    font-size: 1.5vw;
 }

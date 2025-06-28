@@ -7,7 +7,13 @@ let messageScheduleTitle = document.getElementById("messageScheduleTitle")
 let processTitle = document.getElementById("processTitle")
 let kTitle = document.getElementById("kTitle")
 let reverse = document.getElementById("reverse")
-
+let body = document.getElementById("body")
+let next = document.getElementById("next")
+let reset = document.getElementById("reset")
+let forward = document.getElementById("forward")
+let hintContainer = document.getElementById("hintContainer")
+let button = document.querySelectorAll(".button")
+let speed = document.getElementById("speed")
 
 //Step 2 Variables
 let messageTitle = document.getElementById("messageTitle")
@@ -65,7 +71,10 @@ let operatorResultT1 = document.querySelectorAll(".operatorResultT1")
 let operatorResultT2 = document.querySelectorAll(".operatorResultT2")
 let operatorResultNewVar = document.querySelectorAll(".operatorResultNewVar")
 //Result
-let resultContent = document.getElementById("resultContent")
+let resultContentResult = document.getElementById("resultContentResult")
+let result = document.getElementById("result")
+let operatorResultHash = document.querySelectorAll(".operatorResultHash")
+let operatorResultHashHex = document.querySelectorAll(".operatorResultHashHex")
 //hash functions
 
 //Shift right bitwise for [index] bits
@@ -200,7 +209,17 @@ function mod32BinAddition(a,b){
 }
 
 
-
+messagePaddingArr = ['1']
+for(i=0;i<447;i++){
+    messagePaddingArr.push('0')
+}
+for(i = 0;i<64;i++){
+    messageLengthArr.push(currentLength.toString(2).padStart(64,0).split("")[i])
+}
+wholeMessageArr = [...messageItemArr,...messagePaddingArr,...messageLengthArr]
+for(i = 0;i<wholeMessageArr.length;i++){
+    wholeMessageArr[i] = parseInt(wholeMessageArr[i])
+}
 
 message.addEventListener("keyup",()=>{
     messageASCII = []
@@ -318,15 +337,26 @@ function simulation(step){
             groupContent[i].textContent = group.join("")
         }
         process.style.opacity = "1";
+        process.style.zIndex = 100
+        process2.style.opacity = "0";
+        process2.style.zIndex = -100
+        KConstant.style.opacity = "0";
+        KConstant.style.zIndex = -100
     }
 
     //Set W17-W64.
     if(step%116 >=2&& step%116<=49){
+         process.style.opacity = "1";
+         process.style.zIndex = 100
+        process2.style.opacity = "0";
+        process2.style.zIndex = -100
+        KConstant.style.opacity = "0";
+        KConstant.style.zIndex = -100
         let messageArr = []
 
         //Refresh the color of the lists of message groups
         groupContent.forEach((e)=>{
-            e.style.color="#00DDDD"
+            e.style.color="#0077b6"
         })
 
         //Receiving the content of M_{j-2},M_{j-7},M_{j-15},M_{j-16} and return it into a list
@@ -383,19 +413,23 @@ function simulation(step){
         })
     }
     if(step%116>=50 && step%116<=113){
+        
         messageScheduleTitle.textContent = "第四步：雜凑迭代（信息）"
-        process2.style.opacity = "1";
          groupContent.forEach((e)=>{
-            e.style.color="#00DDDD"
+            e.style.color="#0077b6"
         })
         kgroupContent.forEach((e)=>{
-            e.style.color="#00DDDD"
+            e.style.color="#0077b6"
         })
         groupContent[(step-50)%116].style.color = "orange";
         kgroupContent[(step-50)%116].style.color = "magenta";
-        colorArr = ["red","orange","yellow","green","lightgreen","blue","fuchsia"]
+        colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia"]
         KConstant.style.opacity = "1";
+        KConstant.style.zIndex = 100
         process.style.opacity = "0";
+        process.style.zIndex = -100;
+        process2.style.opacity = "1";
+        process2.style.zIndex = 100
         
         if(step%116==50){
             varValueH.forEach((e,i)=>{
@@ -530,6 +564,8 @@ function simulation(step){
     }
 
     if((step)%116==114){
+        colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia","gold"]
+        colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia","gold"]
         if(step-50>0){
             let temp = Hini
             let temp2 = []
@@ -538,7 +574,6 @@ function simulation(step){
             }
             let temp11 = []
             let temp21 = []
-            console.log(temp2)
             Hini = []
             for(k = 0;k<=7;k++){
                 temp11 = []
@@ -549,6 +584,29 @@ function simulation(step){
                     
                 }
                 Hini.push(mod32BinAddition(temp11,temp21).join(""))
+
+
+                operatorResultHash.forEach((e,i)=>{
+                    if(i==k*3){
+                        e.textContent = temp21.join("")
+                        e.style.color = colorArr[i/3]
+                    }
+                    if(i==k*3+1){
+                        e.textContent = temp11.join("")
+                    }
+                    if(i==k*3+2){
+                        e.textContent = Hini[k] + " →"
+                    }
+                })
+
+                operatorResultHashHex.forEach((e,i)=>{
+                    if(i==k*3+2){
+                         e.textContent = parseInt(operatorResultHash[i].textContent,2).toString(16)
+                    }
+                   
+                })
+                
+                
             }
 
 
@@ -563,32 +621,71 @@ function simulation(step){
             e.textContent = ""
         })
         process.style.opacity = 0
+        process.style.zIndex = -100;
         process2.style.opacity = 0
+        process2.style.zIndex = -100
         KConstant.style.opacity = 0
-        messageScheduleTitle.textContent = "第三步：消息調度"
+        KConstant.style.zIndex = -100
+        messageScheduleTitle.textContent = `第三步：消息調度 (第${step/116+1}組數據塊/共${(messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512}組）`
     }
         
 }
 
+let speedInt = 0
+
+
 play.addEventListener("mousedown",()=>{
     clickCount++;
-    
+
+    try{
+        speedInt = parseInt(speed.value);
+    }
+    catch{
+        speedInt = 1;
+    }
+    window.scrollTo(
+        {
+            top:process2.offsetTop,
+            left:0,
+            behavior:"smooth"
+        }
+        
+    )
     if(clickCount%2==1){
         interval = setInterval(()=>{
             if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2){
                 resultArr = []
-    
+                clickCount = 0;
+               
+                window.scrollTo(
+                    {
+                        top:result.offsetTop,
+                        left:0,
+                        behavior:"smooth"
+                    }
+                    
+                )
                 
-               console.log(step)
                 for(i=0;i<8;i++){
                     resultArr.push(parseInt(Hini[i],2).toString(16))
                 }
-                resultContent.textContent = resultArr.join("")
+                resultContentResult.textContent = resultArr.join("")
                 clearInterval(interval)
+                for(i=2;i<5;i++){
+                    button[i].style.zIndex = "-10";
+                    button[i].style.opacity = "0";
+                }
+              
+
+               
             }
-            step++
+            else{
+                 step++
             simulation(step);
-        },100)
+           
+            }
+            
+        },speedInt)
     }
 
     else{
@@ -599,5 +696,225 @@ play.addEventListener("mousedown",()=>{
 
 reverse.addEventListener("mousedown",()=>{
     step--
+    console.log(step)
     simulation(step);
+    button[3].style.opacity = "1";
+    button[3].style.zIndex = "100";
+})
+
+next.addEventListener("mousedown",()=>{
+    step++
+    simulation(step);
+    if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 3){
+        button[3].style.opacity = "0";
+        button[3].style.zIndex = "-100";
+    }
+})
+
+reset.addEventListener("mousedown",()=>{
+    step = 0
+     Hini = ['01101010000010011110011001100111', '10111011011001111010111010000101', '00111100011011101111001101110010', '10100101010011111111010100111010', '01010001000011100101001001111111', '10011011000001010110100010001100', '00011111100000111101100110101011', '01011011111000001100110100011001']
+    simulation(step);
+    for(i=0;i<5;i++){
+        button[i].style.opacity = 1;
+        button[i].style.zIndex = "100";
+    }
+})
+forward.addEventListener("mousedown",()=>{
+    step = 0;
+    for(i=2;i<5;i++){
+        button[i].style.zIndex = "-10";
+        button[i].style.opacity = "0";
+    }
+    for(a=0;a<116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2;a++){
+        console.log(i)
+        step++
+        simulation(step);
+    }
+    resultArr = []
+    clickCount = 0;
+
+    window.scrollTo(
+        {
+            top:result.offsetTop,
+            left:0,
+            behavior:"smooth"
+        }
+        
+    )
+
+    for(i=0;i<8;i++){
+        resultArr.push(parseInt(Hini[i],2).toString(16))
+    }
+    resultContentResult.textContent = resultArr.join("")
+    clearInterval(interval)
+    step =0
+
+})
+
+window.addEventListener("mousemove",(e)=>{
+    hintContainer.style.left = `${e.clientX+10}px`
+     hintContainer.style.top = `${e.clientY+window.scrollY+10}px`
+})
+
+
+button.forEach((e,i)=>{
+    let text = ["重置","上一步","開始/停止模擬","下一步","直出答案"]
+    e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = text[i]
+        hintContainer.style.opacity = 1
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0
+    })
+})
+
+groupContent.forEach((e,i)=>{
+    e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "W" + `${i+1}` + "  dec:"+parseInt(groupContent[i].textContent,2)+ "  hex:"+parseInt(groupContent[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+kgroupContent.forEach((e,i)=>{
+    e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "K" + `${i+1}` + "  dec:"+parseInt(kgroupContent[i].textContent,2)+ "  hex:"+parseInt(kgroupContent[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+messageItemOp13.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(messageItemOp13[i].textContent,2)+ "  hex:"+parseInt(messageItemOp13[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+messageItemOp12.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(messageItemOp12[i].textContent,2)+ "  hex:"+parseInt(messageItemOp12[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+messageItemOp11.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(messageItemOp11[i].textContent,2)+ "  hex:"+parseInt(messageItemOp11[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+varValueH.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(varValueH[i].textContent,2)+ "  hex:"+parseInt(varValueH[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+varValue.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(varValue[i].textContent,2)+ "  hex:"+parseInt(varValue[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultSige.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultSige[i].textContent,2)+ "  hex:"+parseInt(operatorResultSige[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultChefg.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultChefg[i].textContent,2)+ "  hex:"+parseInt(operatorResultChefg[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultSiga.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultSiga[i].textContent,2)+ "  hex:"+parseInt(operatorResultSiga[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultMajabc.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultMajabc[i].textContent,2)+ "  hex:"+parseInt(operatorResultMajabc[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultT1.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultT1[i].textContent,2)+ "  hex:"+parseInt(operatorResultT1[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultT2.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultT2[i].textContent,2)+ "  hex:"+parseInt(operatorResultT2[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultNewVar.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultNewVar[i].textContent,2)+ "  hex:"+parseInt(operatorResultNewVar[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
+})
+
+operatorResultHash.forEach((e,i)=>{
+   e.addEventListener("mouseover",()=>{
+        hintContainer.textContent = "dec:"+parseInt(operatorResultHash[i].textContent,2)+ "  hex:"+parseInt(operatorResultHash[i].textContent,2).toString(16);
+        hintContainer.style.opacity = 1;
+    })
+    e.addEventListener("mouseleave",()=>{
+        hintContainer.style.opacity = 0;
+    })
 })
