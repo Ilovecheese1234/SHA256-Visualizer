@@ -376,8 +376,8 @@ function simulation(step){
         //Set colors of the groups being calculated
         groupContent[(step+12)%116].style.color = "white";
         groupContent[(step+7)%116].style.color = "green";
-        groupContent[(step-2)%116].style.color = "lightgreen";
-        groupContent[(step-1)%116].style.color = "yellow";
+        groupContent[(step-1)%116].style.color = "lightgreen";
+        groupContent[(step-2)%116].style.color = "yellow";
         groupContent[(step+14)%116].style.color = "fuchsia";
 
         //Calculating and return the result of the new message group at W_{j}
@@ -386,21 +386,21 @@ function simulation(step){
         //Arrays that stores the attributes of the message groups being calculated
         messageArr = [message1.join(""),message2.join(""),message3.join(""),message4.join(""),groupContent[(step+14)%116].textContent]
         colorArr = ["white","green","lightgreen","yellow","fuchsia"]
-        indexArr = [`σ1(W${(step+13)%116})`,`W${(step+8)%116}`,`σ0(W${(step-1)%116})`,`W${(step)%116}`,`W${(step+15)%116}`]
+        indexArr = [`σ1(W${(step+13)%116})`,`W${(step+8)%116}`,`σ0(W${(step)%116})`,`W${(step-1)%116}`,`W${(step+15)%116}`]
 
         //Changes the text Contents in the "process" part
         itemTitle11.textContent = `W${(step+13)%116}:     ${messageArr[0]}`
-        messageItemOp11[0].textContent = rotate(message1,7).join("")
-        messageItemOp11[1].textContent = rotate(message1,18).join("")
-        messageItemOp11[2].textContent = shift(message1,3).join("")
+        messageItemOp11[0].textContent = rotate(message1,17).join("")
+        messageItemOp11[1].textContent = rotate(message1,19).join("")
+        messageItemOp11[2].textContent = shift(message1,10).join("")
         messageItemOp11[3].textContent = sigma1(message1,32).join("")
         messageOp11[3].textContent = indexArr[0]
 
-        itemTitle12.textContent = `W${(step-1)%116}:     ${messageArr[0]}`
-        messageItemOp12[0].textContent = rotate(message1,17).join("")
-        messageItemOp12[1].textContent = rotate(message1,19).join("")
-        messageItemOp12[2].textContent = shift(message1,10).join("")
-        messageItemOp12[3].textContent = sigma1(message1,32).join("")
+        itemTitle12.textContent = `W${(step)%116}:     ${messageArr[2]}`
+        messageItemOp12[0].textContent = rotate(message3,7).join("")
+        messageItemOp12[1].textContent = rotate(message3,18).join("")
+        messageItemOp12[2].textContent = shift(message3,3).join("")
+        messageItemOp12[3].textContent = sigma0(message3,32).join("")
         messageOp12[3].textContent = indexArr[2]
 
         messageOp13.forEach((e,i)=>{
@@ -412,8 +412,11 @@ function simulation(step){
             e.style.color = colorArr[i]
         })
     }
+
+    //Calculation of variables a-h
     if(step%116>=50 && step%116<=113){
         
+        //Calculating a-h
         messageScheduleTitle.textContent = "第四步：雜凑迭代（信息）"
          groupContent.forEach((e)=>{
             e.style.color="#0077b6"
@@ -421,15 +424,23 @@ function simulation(step){
         kgroupContent.forEach((e)=>{
             e.style.color="#0077b6"
         })
+
+        //Changes message and k-Constant columns' color
         groupContent[(step-50)%116].style.color = "orange";
         kgroupContent[(step-50)%116].style.color = "magenta";
+
+        //Initial variable colors
         colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia"]
+
+        //Shows k-Constant and hash calculation columns. Hide message calculation column
         KConstant.style.opacity = "1";
         KConstant.style.zIndex = 100
         process.style.opacity = "0";
         process.style.zIndex = -100;
         process2.style.opacity = "1";
         process2.style.zIndex = 100
+        
+
         
         if(step%116==50){
             varValueH.forEach((e,i)=>{
@@ -447,6 +458,8 @@ function simulation(step){
             })
         }
 
+        //Obtain the integer array from variable a-h
+        //string -> string array -> int array
         eVar = varValue[4].textContent.split("")
         for(i = 0;i<32;i++){
             eVar[i] = parseInt(eVar[i])
@@ -480,7 +493,7 @@ function simulation(step){
             dVar[i] = parseInt(dVar[i])
         }
 
-
+        //Calculate Σ1(e)
         operatorResultSige[0].textContent = rotate(eVar,6).join("")
         operatorResultSige[1].textContent = rotate(eVar,11).join("")
         operatorResultSige[2].textContent = rotate(eVar,25).join("")
@@ -490,6 +503,7 @@ function simulation(step){
             e.style.color = "chocolate"
          })
 
+         //Calculate Choose(e,f,g)
          operatorResultChefg[0].textContent = arrNOT(eVar).join("")
          operatorResultChefg[1].textContent = arrAND(eVar,fVar).join("")
          operatorResultChefg[2].textContent = arrAND(arrNOT(eVar),gVar).join("")
@@ -499,6 +513,7 @@ function simulation(step){
             e.style.color = "deepskyblue"
          })
 
+         //Calculate Σ0(a)
          operatorResultSiga[0].textContent = rotate(aVar,2).join("")
         operatorResultSiga[1].textContent = rotate(aVar,13).join("")
         operatorResultSiga[2].textContent = rotate(aVar,22).join("")
@@ -508,6 +523,8 @@ function simulation(step){
             e.style.color = "gold"
          })
 
+         
+        //calculate Majority(a,b,c)
         operatorResultMajabc[0].textContent = arrAND(aVar,bVar).join("")
         operatorResultMajabc[1].textContent = arrAND(aVar,cVar).join("")
         operatorResultMajabc[2].textContent = arrAND(bVar,cVar).join("")
@@ -517,40 +534,43 @@ function simulation(step){
         operatorResultMajabc.forEach((e)=>{
             e.style.color = "ivory"
         })
+
+        //Retrieve binary numbers for the calculation of T1
         operatorNameT1[3].textContent = `W${(step-49)%116}`
         operatorNameT1[4].textContent = `K${(step-49)%116}`
 
         operatorResultT1[0].textContent = hVar.join("");
-
         operatorResultT1[1].textContent = Sigma1(eVar,32).join("")
         operatorResultT1[1].style.color = "chocolate"
-
         operatorResultT1[2].textContent =  arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar)).join("")
         operatorResultT1[2].style.color = "deepskyblue"
-
         operatorResultT1[3].textContent = groupContent[(step-50)%116].textContent;
         operatorResultT1[3].style.color = "gold"
-
+        //num1 = Wj, where j is the row number in the message column W
         num1 = groupContent[(step-50)%116].textContent.split("")
         for(i=0;i<32;i++){
             num1[i] = parseInt(num1[i])
         }
-
+        //append num1 to T1 calculation
         operatorResultT1[4].textContent = kgroupContent[(step-50)%116].textContent;
         operatorResultT1[4].style.color = "magenta"
         num2 = kgroupContent[(step-50)%116].textContent.split("")
+        //num2 = Kj, where j is the row number in the k-constant column K
         for(i=0;i<32;i++){
             num2[i] = parseInt(num2[i]) 
         }
+        //Calculation of T1
         operatorResultT1[5].textContent = mod32BinAddition(mod32BinAddition(mod32BinAddition(mod32BinAddition(hVar,Sigma1(eVar,32)),arrXOR(arrAND(eVar,fVar),arrAND(arrNOT(eVar),gVar))),num1),num2).join("")
-    
+        
+        //Retrieve binary numbers for the calculation of T2
         operatorResultT2[0].textContent =  Sigma0(aVar,32).join("");
          operatorResultT2[0].style.color = "gold"
         operatorResultT2[1].textContent = arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar)).join("");
         operatorResultT2[1].style.color = "ivory"
+        //Calculation of T2
         operatorResultT2[2].textContent = mod32BinAddition(Sigma0(aVar,32),arrXOR(arrXOR(arrAND(aVar,bVar),arrAND(aVar,cVar)),arrAND(bVar,cVar))).join("")
         
-
+        //Calculation of new set of variables a-h
         operatorResultNewVar[0].textContent = gVar.join("")
         operatorResultNewVar[1].textContent = fVar.join("")
         operatorResultNewVar[2].textContent = eVar.join("")
@@ -563,15 +583,28 @@ function simulation(step){
         
     }
 
+    //For calculating new hash numbers H1-H8
     if((step)%116==114){
         colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia","gold"]
-        colorArr = ["red","orange","yellow","green","lightgreen","cyan","fuchsia","gold"]
         if(step-50>0){
+            //temp stores the initial Hash value(i.e. H1-H8) from the previous process.
+            //temp2 stores the new variables(i.e. a-h) from the previous process
             let temp = Hini
             let temp2 = []
             for(m = 0;m<=7;m++){
                 temp2.push(operatorResultNewVar[m].textContent)
             }
+
+            //temp11 stores initial Hash value(i.e. H1-H8) bitwise
+            //temp21 stores new variables(i.e. a-h) bitwise
+            /*
+                For a 512-bit long message "abc"
+
+                temp1 stores [["01101010000010011110011001100111"],...] (initial hash value H1-H8)
+                temp2 stores [["10010110000111110100100010010100"],...] (new variables a-h)
+                temp11 stores [[0,1,1,0,1,0,0,0,0,0,1,0,0,1,1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1],...] (initial hash value H1-H8 bitwise)
+                temp21 stores [[1,0,0,1,0,1,1,0,0,0,0,1,1,1,1,1,0,1,0,0,1,0,0,0,1,0,0,1,0,1,0,0],...] (new variables a-h bitwise)
+            */
             let temp11 = []
             let temp21 = []
             Hini = []
@@ -583,10 +616,14 @@ function simulation(step){
                     temp21.push(parseInt(temp2[7-k][l]))
                     
                 }
+                /*
+                Final Hash value will be stored back to Hini 
+                */
                 Hini.push(mod32BinAddition(temp11,temp21).join(""))
 
 
                 operatorResultHash.forEach((e,i)=>{
+                    //Print the calculation in the HTML in step 5
                     if(i==k*3){
                         e.textContent = temp21.join("")
                         e.style.color = colorArr[i/3]
@@ -617,6 +654,7 @@ function simulation(step){
     }
 
     if((step)%116==0){
+        //Reset HTML style
         groupContent.forEach((e,i)=>{
             e.textContent = ""
         })
@@ -635,28 +673,31 @@ let speedInt = 0
 
 
 play.addEventListener("mousedown",()=>{
+    //clickCount = count how many times user has clicked
     clickCount++;
-
+    //speedInt = speed of calculation (in millisecond)
+    //If user input an invalid number, the program will set it to 1
     try{
         speedInt = parseInt(speed.value);
     }
     catch{
         speedInt = 1;
     }
+    //To window will slide to the calculation process
     window.scrollTo(
         {
             top:process2.offsetTop,
             left:0,
             behavior:"smooth"
-        }
-        
+        }    
     )
     if(clickCount%2==1){
         interval = setInterval(()=>{
+            //Detects whether the calculation has finished
             if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2){
                 resultArr = []
                 clickCount = 0;
-               
+                //if finished, the window will slide to the result
                 window.scrollTo(
                     {
                         top:result.offsetTop,
@@ -665,12 +706,14 @@ play.addEventListener("mousedown",()=>{
                     }
                     
                 )
-                
+                //resultArr stores the hexadecimal numbers from the final hash values H1-H8
                 for(i=0;i<8;i++){
                     resultArr.push(parseInt(Hini[i],2).toString(16))
                 }
                 resultContentResult.textContent = resultArr.join("")
+                //Stops simulation
                 clearInterval(interval)
+                //Hide "play/pause", "next step" and "finish calculation" button
                 for(i=2;i<5;i++){
                     button[i].style.zIndex = "-10";
                     button[i].style.opacity = "0";
@@ -680,7 +723,8 @@ play.addEventListener("mousedown",()=>{
                
             }
             else{
-                 step++
+            //if the calculation hasn't finished, then keep playing
+            step++
             simulation(step);
            
             }
@@ -689,20 +733,28 @@ play.addEventListener("mousedown",()=>{
     }
 
     else{
+        //Pause the simulation
         clearInterval(interval)
     }
     
 })
 
 reverse.addEventListener("mousedown",()=>{
-    step--
-    console.log(step)
-    simulation(step);
+    //Go back a step and run through the whole process from step 1 to step [step-1]
+    let stop = step--
+    console.log(stop)
+    step = -1
+    for(m=0;m<stop;m++){
+        step++
+        console.log(step);
+        simulation(step);
+    }
     button[3].style.opacity = "1";
     button[3].style.zIndex = "100";
 })
 
 next.addEventListener("mousedown",()=>{
+    //Go to the next step
     step++
     simulation(step);
     if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 3){
@@ -712,6 +764,7 @@ next.addEventListener("mousedown",()=>{
 })
 
 reset.addEventListener("mousedown",()=>{
+    //Reset the step to 0 and set initial hash value to fractional parts of the square roots of the rst eight primes
     step = 0
      Hini = ['01101010000010011110011001100111', '10111011011001111010111010000101', '00111100011011101111001101110010', '10100101010011111111010100111010', '01010001000011100101001001111111', '10011011000001010110100010001100', '00011111100000111101100110101011', '01011011111000001100110100011001']
     simulation(step);
@@ -721,7 +774,10 @@ reset.addEventListener("mousedown",()=>{
     }
 })
 forward.addEventListener("mousedown",()=>{
+    //set the step to 0 and run through the whole simulation without displaying the intermediate steps
     step = 0;
+
+    //This is just a copy from the [play] button program.
     for(i=2;i<5;i++){
         button[i].style.zIndex = "-10";
         button[i].style.opacity = "0";
@@ -753,12 +809,15 @@ forward.addEventListener("mousedown",()=>{
 })
 
 window.addEventListener("mousemove",(e)=>{
+    //hintContainer is just a tooltip but I forget the name
+    //Display button name and translation of binary nums to decimal and hexadecimal nums
     hintContainer.style.left = `${e.clientX+10}px`
      hintContainer.style.top = `${e.clientY+window.scrollY+10}px`
 })
 
 
 button.forEach((e,i)=>{
+    //Configure the names of the buttons
     let text = ["重置","上一步","開始/停止模擬","下一步","直出答案"]
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = text[i]
@@ -770,6 +829,7 @@ button.forEach((e,i)=>{
 })
 
 groupContent.forEach((e,i)=>{
+    //When the cursor hovers on one of the binary numbers in the message column, the tooltip will be dipslayed with hexa and dec nums of the corresponding bin num.
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = "W" + `${i+1}` + "  dec:"+parseInt(groupContent[i].textContent,2)+ "  hex:"+parseInt(groupContent[i].textContent,2).toString(16);
         hintContainer.style.opacity = 1;
@@ -780,6 +840,8 @@ groupContent.forEach((e,i)=>{
 })
 
 kgroupContent.forEach((e,i)=>{
+
+    //When the cursor hovers on one of the binary numbers in the k-Constant column, the tooltip will be dipslayed with hexa and dec nums of the corresponding bin num.
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = "K" + `${i+1}` + "  dec:"+parseInt(kgroupContent[i].textContent,2)+ "  hex:"+parseInt(kgroupContent[i].textContent,2).toString(16);
         hintContainer.style.opacity = 1;
@@ -788,6 +850,9 @@ kgroupContent.forEach((e,i)=>{
         hintContainer.style.opacity = 0;
     })
 })
+
+
+//When the cursor hovers on one of the binary numbers in the message schedule calculation column, the tooltip will be dipslayed with hexa and dec nums of the corresponding bin num.
 
 messageItemOp13.forEach((e,i)=>{
    e.addEventListener("mouseover",()=>{
@@ -839,6 +904,7 @@ varValue.forEach((e,i)=>{
     })
 })
 
+//When the cursor hovers on one of the binary numbers in the hash value calculation column, the tooltip will be dipslayed with hexa and dec nums of the corresponding bin num.
 operatorResultSige.forEach((e,i)=>{
    e.addEventListener("mouseover",()=>{
         hintContainer.textContent = "dec:"+parseInt(operatorResultSige[i].textContent,2)+ "  hex:"+parseInt(operatorResultSige[i].textContent,2).toString(16);
