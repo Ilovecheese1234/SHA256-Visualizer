@@ -36,9 +36,36 @@ messageItem.textContent = messageItemArr.join("")
 let wholeMessageArr=[]
 
 
+
+
+
+//hash functions
+
+//finish appending children in message list
+let messageListItem = []
+
+for(i=0;i<64;i++){
+    messageListItem.push(document.createElement("div"))
+    let messageListName = document.createElement("div")
+    let messageListContent = document.createElement("div")
+
+    messageListItem[i].className = "messageGroup"
+    messageListName.className = "groupName"
+    messageListName.textContent = `W${i+1}`
+    messageListContent.className = "groupContent"
+
+    messageListItem[i].appendChild(messageListName)
+    messageListItem[i].appendChild(messageListContent)
+    console.log(messageListItem[i])
+    messageScheduleContent.appendChild(messageListItem[i])
+    
+}
+
+
 //Step 3 Variable
 let groupName = document.querySelectorAll(".groupName")
 let groupContent = document.querySelectorAll(".groupContent")
+
 
 //Step 4 Variable
 let process = document.getElementById("process")
@@ -53,6 +80,27 @@ let messageOp11 = document.querySelectorAll(".messageOp11")
 let messageItemOp12 = document.querySelectorAll(".messageItemOp12")
 let itemTitle12 = document.getElementById("itemTitle12")
 let messageOp12 = document.querySelectorAll(".messageOp12")
+
+//Finish appending children in kContent
+let kArr = []
+let kContent = document.getElementById("kContent")
+for(i = 0;i<64;i++){
+    kArr.push(document.createElement("div"))
+    let kgroupName = document.createElement("div")
+    let kgroupContent =document.createElement("div")
+
+    kArr[i].className = "kGroup"
+
+    kgroupName.className = "kgroupName"
+    kgroupContent.className = "kgroupContent"
+
+    kArr[i].appendChild(kgroupName)
+    kArr[i].appendChild(kgroupContent)
+
+    kContent.appendChild(kArr[i])
+}
+
+
 
 //step 5 Variable
 let kgroupName = document.querySelectorAll(".kgroupName")
@@ -70,12 +118,14 @@ let operatorNameT1 = document.querySelectorAll(".operatorNameT1")
 let operatorResultT1 = document.querySelectorAll(".operatorResultT1")
 let operatorResultT2 = document.querySelectorAll(".operatorResultT2")
 let operatorResultNewVar = document.querySelectorAll(".operatorResultNewVar")
+
+
+
 //Result
 let resultContentResult = document.getElementById("resultContentResult")
 let result = document.getElementById("result")
 let operatorResultHash = document.querySelectorAll(".operatorResultHash")
 let operatorResultHashHex = document.querySelectorAll(".operatorResultHashHex")
-//hash functions
 
 //Shift right bitwise for [index] bits
 function shift(arr,index){
@@ -671,9 +721,8 @@ function simulation(step){
 
 let speedInt = 0
 
-
-play.addEventListener("mousedown",()=>{
-    //clickCount = count how many times user has clicked
+function playsimulation(){
+        //clickCount = count how many times user has clicked
     clickCount++;
     //speedInt = speed of calculation (in millisecond)
     //If user input an invalid number, the program will set it to 1
@@ -738,9 +787,13 @@ play.addEventListener("mousedown",()=>{
         clearInterval(interval)
     }
     
+}
+
+play.addEventListener("mousedown",()=>{
+    playsimulation();
 })
 
-reverse.addEventListener("mousedown",()=>{
+function back(){
     //Go back a step and run through the whole process from step 1 to step [step-1]
     let stop = step--
     console.log(stop)
@@ -752,9 +805,13 @@ reverse.addEventListener("mousedown",()=>{
     }
     button[3].style.opacity = "1";
     button[3].style.zIndex = "100";
+}
+
+reverse.addEventListener("mousedown",()=>{
+    back();
 })
 
-next.addEventListener("mousedown",()=>{
+function nextStep(){
     //Go to the next step
     step++
     simulation(step);
@@ -762,9 +819,13 @@ next.addEventListener("mousedown",()=>{
         button[3].style.opacity = "0";
         button[3].style.zIndex = "-100";
     }
+}
+
+next.addEventListener("mousedown",()=>{
+    nextStep()
 })
 
-reset.addEventListener("mousedown",()=>{
+function resetSimulation(){
     //Reset the step to 0 and set initial hash value to fractional parts of the square roots of the rst eight primes
     step = 0
      Hini = ['01101010000010011110011001100111', '10111011011001111010111010000101', '00111100011011101111001101110010', '10100101010011111111010100111010', '01010001000011100101001001111111', '10011011000001010110100010001100', '00011111100000111101100110101011', '01011011111000001100110100011001']
@@ -773,8 +834,13 @@ reset.addEventListener("mousedown",()=>{
         button[i].style.opacity = 1;
         button[i].style.zIndex = "100";
     }
+}
+
+reset.addEventListener("mousedown",()=>{
+    resetSimulation();
 })
-forward.addEventListener("mousedown",()=>{
+
+function answer(){
     //set the step to 0 and run through the whole simulation without displaying the intermediate steps
     step = 0;
 
@@ -807,6 +873,10 @@ forward.addEventListener("mousedown",()=>{
     clearInterval(interval)
     step =0
 
+}
+
+forward.addEventListener("mousedown",()=>{
+    answer();
 })
 
 window.addEventListener("mousemove",(e)=>{
@@ -819,7 +889,7 @@ window.addEventListener("mousemove",(e)=>{
 
 button.forEach((e,i)=>{
     //Configure the names of the buttons
-    let text = ["重置","上一步","開始/停止模擬","下一步","直出答案"]
+    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(空格·)","下一步(右箭頭)","直出答案(確認鍵)"]
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = text[i]
         hintContainer.style.opacity = 1
@@ -984,4 +1054,13 @@ operatorResultHash.forEach((e,i)=>{
     e.addEventListener("mouseleave",()=>{
         hintContainer.style.opacity = 0;
     })
+})
+
+window.addEventListener("keydown",(e)=>{
+    if(e.key==" ") playsimulation()
+    if(e.key=="r") resetSimulation()
+    if(e.key=="ArrowLeft") back()
+    if(e.key=="ArrowRight") nextStep()
+    if(e.key=="Enter") answer()
+    console.log(e.key)
 })
