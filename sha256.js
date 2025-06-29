@@ -330,7 +330,7 @@ function simulation(step){
 
         for(i=0;i<16;i++){
             group = []
-            for(j=(i+parseInt(step/114)*16)*32;j<(i+1+parseInt(step/114)*16)*32;j++){
+            for(j=(i+parseInt(step/116)*16)*32;j<(i+1+parseInt(step/116)*16)*32;j++){
                 group.push(wholeMessageArr[j])
 
             }
@@ -692,9 +692,10 @@ play.addEventListener("mousedown",()=>{
         }    
     )
     if(clickCount%2==1){
+        console.log(116 * ((wholeMessageArr.length)/512) -2)
         interval = setInterval(()=>{
             //Detects whether the calculation has finished
-            if(step == 116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2){
+            if(step == 116 * ((wholeMessageArr.length)/512) - 2){
                 resultArr = []
                 clickCount = 0;
                 //if finished, the window will slide to the result
