@@ -152,7 +152,7 @@ for(i = 0;i<8;i++){
 
 let calcContainerHash = document.querySelectorAll(".calcContainerHash")
 let count = 0
-console.log(calcContainerHash.length)
+console.log(1);
 for(i=0;i<24;i++){
     for(k=0;k<4;k++){
         //Creating 3rd layer DOM elements
@@ -180,7 +180,6 @@ let resultContentResult = document.getElementById("resultContentResult")
 let result = document.getElementById("result")
 let operatorResultHash = document.querySelectorAll(".operatorResultHash")
 let operatorResultHashHex = document.querySelectorAll(".operatorResultHashHex")
-console.log(calcContainerHash[0])
 
 
 
