@@ -884,7 +884,7 @@ window.addEventListener("mousemove",(e)=>{
 
 button.forEach((e,i)=>{
     //Configure the names of the buttons
-    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(S)","下一步(右箭頭)","直出答案(確認鍵)"]
+    let text = ["重置","上一步","開始/停止模擬","下一步","直出答案"]
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = text[i]
         hintContainer.style.opacity = 1
@@ -1049,12 +1049,4 @@ operatorResultHash.forEach((e,i)=>{
     e.addEventListener("mouseleave",()=>{
         hintContainer.style.opacity = 0;
     })
-})
-
-window.addEventListener("keydown",(e)=>{
-    if(e.key==" ") playsimulation()
-    if(e.key=="r") resetSimulation()
-    if(e.key=="ArrowLeft") back()
-    if(e.key=="ArrowRight") nextStep()
-    if(e.key=="s") answer()
 })
