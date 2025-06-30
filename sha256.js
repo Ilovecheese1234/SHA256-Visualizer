@@ -56,7 +56,6 @@ for(i=0;i<64;i++){
 
     messageListItem[i].appendChild(messageListName)
     messageListItem[i].appendChild(messageListContent)
-    console.log(messageListItem[i])
     messageScheduleContent.appendChild(messageListItem[i])
     
 }
@@ -741,7 +740,6 @@ function playsimulation(){
         }    
     )
     if(clickCount%2==1){
-        console.log(116 * ((wholeMessageArr.length)/512) -2)
         interval = setInterval(()=>{
             //Detects whether the calculation has finished
             if(step == 116 * ((wholeMessageArr.length)/512) - 2){
@@ -796,11 +794,9 @@ play.addEventListener("mousedown",()=>{
 function back(){
     //Go back a step and run through the whole process from step 1 to step [step-1]
     let stop = step--
-    console.log(stop)
     step = -1
     for(m=0;m<stop;m++){
         step++
-        console.log(step);
         simulation(step);
     }
     button[3].style.opacity = "1";
@@ -850,7 +846,6 @@ function answer(){
         button[i].style.opacity = "0";
     }
     for(a=0;a<116 * ((messageItemArr.length+messagePaddingArr.length+messageLengthArr.length)/512) - 2;a++){
-        console.log(i)
         step++
         simulation(step);
     }
@@ -889,7 +884,7 @@ window.addEventListener("mousemove",(e)=>{
 
 button.forEach((e,i)=>{
     //Configure the names of the buttons
-    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(空格)","下一步(右箭頭)","直出答案(確認鍵)"]
+    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(S)","下一步(右箭頭)","直出答案(確認鍵)"]
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = text[i]
         hintContainer.style.opacity = 1
@@ -1061,6 +1056,5 @@ window.addEventListener("keydown",(e)=>{
     if(e.key=="r") resetSimulation()
     if(e.key=="ArrowLeft") back()
     if(e.key=="ArrowRight") nextStep()
-    if(e.key=="Enter") answer()
-    console.log(e.key)
+    if(e.key=="s") answer()
 })
