@@ -34,13 +34,6 @@ let messageLengthArrInt = 0
 messageItem.textContent = messageItemArr.join("")
 
 let wholeMessageArr=[]
-
-
-
-
-
-//hash functions
-
 //finish appending children in message list
 let messageListItem = []
 
@@ -121,11 +114,79 @@ let operatorResultNewVar = document.querySelectorAll(".operatorResultNewVar")
 
 
 //Result
+let calcHashContainer = document.getElementById("calcHashContainer");
+//Dynamically append DOM in JS in Result Section
+let containerHashArr = []
+let containerHashArr2 = []
+let classNameArr = ["operatorHash","operatorNameHash","operatorResultHash","operatorResultHashHex"]
+//Layout
+/*
+.calcHashContainer                  (0th layer - Created in HTML file)
+    .containerHash                  (1st layer - Dynamically created in JS)
+        .calcContainerHash          (2nd layer - Dynamically created in JS)
+            .operatorHash           (3a-th layer - Dynamically created in JS)
+            .operatorNameHash       (3b-th layer - Dynamically created in JS)
+            .operatorResultHash     (3c-th layer - Dynamically created in JS)
+            .operatorResultHashHex  (3d-th layer - Dynamically created in JS)
+
+*/
+for(i = 0;i<8;i++){
+    containerHashArr.push(document.createElement("div"))
+    containerHashArr[i].className = "containerHash"
+    for(j=0;j<4;j++){
+        
+        if(j!=2){
+            //Create 2nd layer DOM elements
+            let newElement = document.createElement("div")
+            newElement.className = "calcContainerHash"
+            //Appending 2nd layerDOM elements
+            containerHashArr[i].appendChild(newElement)
+        }
+        else{
+            let horizontalLine = document.createElement("hr")
+            containerHashArr[i].appendChild(horizontalLine)
+        }
+    }
+    calcHashContainer.appendChild(containerHashArr[i])
+}
+
+let calcContainerHash = document.querySelectorAll(".calcContainerHash")
+let count = 0
+console.log(calcContainerHash.length)
+for(i=0;i<24;i++){
+    for(k=0;k<4;k++){
+        //Creating 3rd layer DOM elements
+        let e = document.createElement("div")
+        e.className = classNameArr[k]
+        if((i*4+k+11)%12==0){
+            e.textContent = String.fromCharCode(97+count)
+            count++
+        }
+        if((i*4+k+8)%12==0){
+            e.textContent = "+"
+        }
+        if((i*4+k+7)%12==0){
+            e.textContent = `舊H${count}`
+        }
+        if((i*4+k+3)%12==0){
+            e.textContent = `新H${count}`
+        }
+
+        //Appending 3rd layerDOM element
+        calcContainerHash[i].appendChild(e)
+    }   
+}
 let resultContentResult = document.getElementById("resultContentResult")
 let result = document.getElementById("result")
 let operatorResultHash = document.querySelectorAll(".operatorResultHash")
 let operatorResultHashHex = document.querySelectorAll(".operatorResultHashHex")
+console.log(calcContainerHash[0])
 
+
+
+
+
+//Hash Functions
 //Shift right bitwise for [index] bits
 function shift(arr,index){
  let result=[]
@@ -257,7 +318,7 @@ function mod32BinAddition(a,b){
     return ans;
 }
 
-
+//Initialize message padding for calculation
 messagePaddingArr = ['1']
 for(i=0;i<447;i++){
     messagePaddingArr.push('0')
