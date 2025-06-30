@@ -889,7 +889,7 @@ window.addEventListener("mousemove",(e)=>{
 
 button.forEach((e,i)=>{
     //Configure the names of the buttons
-    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(空格·)","下一步(右箭頭)","直出答案(確認鍵)"]
+    let text = ["重置（R）","上一步（左箭頭）","開始/停止模擬(空格)","下一步(右箭頭)","直出答案(確認鍵)"]
     e.addEventListener("mouseover",()=>{
         hintContainer.textContent = text[i]
         hintContainer.style.opacity = 1
